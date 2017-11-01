@@ -1,0 +1,42 @@
+sudo: false
+
+language: php
+
+env:
+  global:
+    - COMPOSER_ALLOW_XDEBUG=0
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+services:
+  - memcached
+
+addons:
+  apt:
+    packages:
+      - parallel
+
+php:
+  - 5.5.9
+  - 5.6
+  # - 7.0
+  # - 7.1
+
+before_install:
+    - echo "extension=memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    # - no | pecl install -f memcached-2.1.0
+    # - echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+before_script:
+    - composer install --no-interaction --no-suggest
+
+script:
+  - composer tests
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+    email: false

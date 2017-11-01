@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertWarningsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertErrorsToExceptions="true"
+         processIsolation="false"
+         stopOnError="true"
+         stopOnFailure="true"
+         stopOnIncomplete="true"
+         stopOnSkipped="true"
+         stopOnRisky="true"
+         verbose="false">
+
+    <testsuites>
+        <testsuite name="Telegram Bot Controller Provider Test Suite">
+            <directory>tests/Silex/Tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/Silex/</directory>
+        </whitelist>
+    </filter>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">tests/Acme/</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-clover" target="var/log/clover.xml"/>
+    </logging>
+
+</phpunit>
