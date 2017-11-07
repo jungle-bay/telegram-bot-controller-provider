@@ -26,12 +26,6 @@
         </whitelist>
     </filter>
 
-    <filter>
-        <whitelist>
-            <directory suffix=".php">tests/Acme/</directory>
-        </whitelist>
-    </filter>
-
     <logging>
         <log type="coverage-clover" target="var/log/clover.xml"/>
     </logging>

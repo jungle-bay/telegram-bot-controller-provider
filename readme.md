@@ -5,7 +5,7 @@
 [![Codecov](https://img.shields.io/codecov/c/github/jungle-bay/telegram-bot-controller-provider.svg?style=flat)](https://codecov.io/gh/jungle-bay/telegram-bot-controller-provider)
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/46abe828-3d9f-4ef4-9663-aaa94d6239f4.svg?style=flat)](https://insight.sensiolabs.com/projects/46abe828-3d9f-4ef4-9663-aaa94d6239f4)
 
-### Install (in a while)
+### Install
 
 The recommended way to install is through [Composer](https://getcomposer.org):
 
