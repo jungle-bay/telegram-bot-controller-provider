@@ -1,9 +1,9 @@
 # Telegram Bot Controller Provider for [Silex](https://silex.symfony.com/)
 
-[![Travis CI](https://img.shields.io/travis/jungle-bay/telegram-controller-provider.svg?style=flat)](https://travis-ci.org/jungle-bay/telegram-controller-provider)
-[![Scrutinizer CI](https://img.shields.io/scrutinizer/g/jungle-bay/telegram-controller-provider.svg?style=flat)](https://scrutinizer-ci.com/g/jungle-bay/telegram-controller-provider)
-[![Codecov](https://img.shields.io/codecov/c/github/jungle-bay/telegram-controller-provider.svg?style=flat)](https://codecov.io/gh/jungle-bay/telegram-controller-provider)
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/16f94065-ba61-4ec9-851c-3fbfdca7e1c9.svg?style=flat)](https://insight.sensiolabs.com/projects/16f94065-ba61-4ec9-851c-3fbfdca7e1c9)
+[![Travis CI](https://img.shields.io/travis/jungle-bay/telegram-bot-controller-provider.svg?style=flat)](https://travis-ci.org/jungle-bay/telegram-bot-controller-provider)
+[![Scrutinizer CI](https://img.shields.io/scrutinizer/g/jungle-bay/telegram-bot-controller-provider.svg?style=flat)](https://scrutinizer-ci.com/g/jungle-bay/telegram-bot-controller-provider)
+[![Codecov](https://img.shields.io/codecov/c/github/jungle-bay/telegram-bot-controller-provider.svg?style=flat)](https://codecov.io/gh/jungle-bay/telegram-bot-controller-provider)
+[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/46abe828-3d9f-4ef4-9663-aaa94d6239f4.svg?style=flat)](https://insight.sensiolabs.com/projects/46abe828-3d9f-4ef4-9663-aaa94d6239f4)
 
 ### Install (in a while)
 
