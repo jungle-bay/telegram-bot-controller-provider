@@ -1,6 +1,6 @@
-.git/
-vendor/
-var/
 /composer.phar
 /composer.lock
 /phpunit.xml
+.git/
+vendor/
+var/
