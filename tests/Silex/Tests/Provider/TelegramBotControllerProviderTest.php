@@ -3,12 +3,14 @@
 namespace Silex\Tests\Provider;
 
 
+use PDO;
 use Silex\WebTestCase;
 use Silex\Application;
-use Acme\Bot\Commands\OrderCmd;
-use Acme\Bot\Commands\DefaultCmd;
+use Acme\Commands\OrderCmd;
+use Acme\Commands\DefaultCmd;
 use TelegramBotAPI\TelegramBotAPI;
 use TelegramBotShell\TelegramBotShell;
+use MatthiasMullie\Scrapbook\Adapters\MySQL;
 use Silex\Provider\TelegramBotControllerProvider;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -154,12 +156,12 @@ class TelegramBotControllerProviderTest extends WebTestCase {
 
         unset($app['exception_handler']);
 
+        $client = new PDO('mysql:dbname=cache;host=127.0.0.1', 'root', '');
+        $cache = new MySQL($client);
+
         $app->mount('/bot479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc', new TelegramBotControllerProvider(array(
             'token'    => '479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc',
-            'memcache' => array(
-                'host' => '127.0.0.1',
-                'port' => 11211
-            ),
+            'adapter'  => $cache,
             'commands' => array(
                 'default'  => DefaultCmd::class,
                 'mappings' => array(
@@ -183,7 +185,5 @@ class TelegramBotControllerProviderTest extends WebTestCase {
         $client->request('POST', '/bot479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc/', array(), array(), array(), $request);
 
         $this->assertTrue($client->getResponse()->isOk());
-        $this->assertInstanceOf(TelegramBotShell::class, $this->app['tbs']);
-        $this->assertInstanceOf(TelegramBotAPI::class, $this->app['tbs']->getTelegramBotAPI());
     }
 }

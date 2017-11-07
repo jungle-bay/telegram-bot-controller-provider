@@ -18,24 +18,24 @@ composer require jungle-bay/telegram-controller-provider
 ```php
 <?php
 
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
 use Silex\Application;
-use Acme\Commands\HelloCmd;
-use Acme\Commands\DefaultCmd;
-use Silex\Provider\TelegramControllerProvider;
+use Acme\Bots\Telegram\Commands\OrderCmd;
+use Acme\Bots\Telegram\Commands\DefaultCmd;
+use Silex\Provider\TelegramBotControllerProvider;
 
 $app = new Application();
 
 // url address can be any, in the example is an example from the documentation.
-$app->mount('/123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', new TelegramControllerProvider(array(
-    // your bot token.
-    'token' => '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
-    'cmd'   => array(
-        // if the command is not found in the list.
+$app->mount('/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', new TelegramBotControllerProvider(array(
+    'token'    => '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
+    'adapter'  => $cache, // this adapter for Scrapbook library. See the complete: https://github.com/matthiasmullie/scrapbook#adapters
+    'commands' => array(
         'default'  => DefaultCmd::class,
-        // key is the name of the command,
-        // the value is the class in which the behavior of the command should be described.
         'mappings' => array(
-            'hello' => HelloCmd::class
+            'order' => OrderCmd::class
         )
     )
 )));
@@ -43,29 +43,28 @@ $app->mount('/123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', new TelegramController
 $app->run();
 ```
 
-##### Example implement hello command
+##### Example implement default command
 
 ```php
 <?php
 
-namespace Acme\Commands;
+namespace Acme\Bots\Telegram\Commands;
 
 
-use Silex\Application;
 use TelegramBotAPI\Types\Update;
-use TelegramBotAPI\TelegramBotAPI;
-use Silex\Api\TelegramCommandInterface;
+use TelegramBotShell\TelegramBotShell;
+use TelegramBotShell\Api\TelegramBotCmdInterface;
 
-class HelloCmd implements TelegramCommandInterface {
+class DefaultCmd implements TelegramBotCmdInterface {
 
-    public function exec(Application $app, Update $update) {
+    /**
+     * {@inheritdoc}
+     */
+    public function exec(TelegramBotShell $tbs, Update $update, $payload = null) {
 
-        /** @var TelegramBotAPI $tba */
-        $tba = $app['tba'];
-
-        $tba->sendMessage(array(
+        $tbs->getTelegramBotAPI()->sendMessage(array(
             'chat_id' => $update->getMessage()->getChat()->getId(),
-            'text'    => 'Hello my friend ' . $update->getMessage()->getFrom()->getFirstName() . ' !'
+            'text'    => 'Default Cmd ;)'
         ));
     }
 }
@@ -78,8 +77,8 @@ class HelloCmd implements TelegramCommandInterface {
 >
 > `https://www.example.com/123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/`
 >
-> Remember that webhook will only work on a https connection.
+> Remember that webhook will only work on a https connection and method getUpdate not work when include webhook.
 
 ### License
 
-This bundle is under the [MIT license](http://opensource.org/licenses/MIT). See the complete license in the file: [here](https://github.com/jungle-bay/telegram-controller-provider/blob/master/license.txt).
+This bundle is under the [MIT license](http://opensource.org/licenses/MIT). See the complete license in the file: [here](https://github.com/jungle-bay/telegram-bot-controller-provider/blob/master/license.txt).

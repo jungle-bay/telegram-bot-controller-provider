@@ -12,33 +12,31 @@ class OrderCmd implements TelegramBotCmdInterface {
     /**
      * @param TelegramBotShell $tbs
      * @param Update $update
-     * @param $payload
      */
-    public function thanks(TelegramBotShell $tbs, Update $update, $payload) {
+    public function thanks(TelegramBotShell $tbs, Update $update) {
 
         $user = $update->getMessage()->getFrom();
 
         $message = $tbs->getTelegramBotAPI()->sendMessage(array(
             'chat_id' => $update->getMessage()->getChat()->getId(),
-            'text'    => 'Thanks ' . $user->getFirstName() . ' ' . $user->getLastName() . ' !!!'
+            'text'    => 'Thanks ' . $user->getFirstName() . ' ' . $user->getLastName() . ' !!! x'
         ));
 
-        $tbs->finishContext($message->getChat()->getId());
+        $tbs->deleteContext($message->getChat()->getId());
     }
 
     /**
      * @param TelegramBotShell $tbs
      * @param Update $update
-     * @param $payload
      */
-    public function selectProduct(TelegramBotShell $tbs, Update $update, $payload) {
+    public function selectProduct(TelegramBotShell $tbs, Update $update) {
 
         $message = $tbs->getTelegramBotAPI()->sendMessage(array(
             'chat_id' => $update->getMessage()->getChat()->getId(),
-            'text'    => 'Your choice ' . $update->getMessage()->getText() . ' !!!'
+            'text'    => 'Your choice ' . $update->getMessage()->getText() . ' !!! x'
         ));
 
-        $tbs->nextContext(array(
+        $tbs->setContext(array(
             'chat_id' => $message->getChat()->getId(),
             'context' => array(
                 'cmd'    => self::class,
@@ -50,14 +48,14 @@ class OrderCmd implements TelegramBotCmdInterface {
     /**
      * {@inheritdoc}
      */
-    public function exec(TelegramBotShell $tbs, Update $update, $payload) {
+    public function exec(TelegramBotShell $tbs, Update $update, $payload = null) {
 
         $message = $tbs->getTelegramBotAPI()->sendMessage(array(
             'chat_id' => $update->getMessage()->getChat()->getId(),
-            'text'    => 'Hi, select product ?'
+            'text'    => 'Hi, select product ? x'
         ));
 
-        $tbs->nextContext(array(
+        $tbs->setContext(array(
             'chat_id' => $message->getChat()->getId(),
             'context' => array(
                 'cmd'    => self::class,

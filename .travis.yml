@@ -1,4 +1,5 @@
 sudo: false
+dist: trusty
 
 language: php
 
@@ -6,28 +7,29 @@ env:
   global:
     - COMPOSER_ALLOW_XDEBUG=0
 
+services:
+  - mysql
+
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+  - hhvm
+  - nightly
+
+matrix:
+  allow_failures:
+  - php: hhvm
+  - php: nightly
+
 cache:
   directories:
     - $HOME/.composer/cache
 
-services:
-  - memcached
-
-addons:
-  apt:
-    packages:
-      - parallel
-
-php:
-  - 5.5.9
-  - 5.6
-  # - 7.0
-  # - 7.1
-
 before_install:
-    - echo "extension=memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-    # - no | pecl install -f memcached-2.1.0
-    # - echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - mysql -e 'CREATE DATABASE IF NOT EXISTS `cache` CHARACTER SET UTF8 COLLATE utf8_general_ci;'
 
 before_script:
     - composer install --no-interaction --no-suggest
@@ -36,6 +38,8 @@ script:
   - composer tests
 
 after_success:
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - php ./ocular.phar code-coverage:upload --format=php-clover ./var/log/clover.xml
     - bash <(curl -s https://codecov.io/bash)
 
 notifications:

@@ -13,4 +13,5 @@ tests               export-ignore
 changelog.md        export-ignore
 contributing.md     export-ignore
 phpunit.xml.dist    export-ignore
+license.txt         export-ignore
 readme.md           export-ignore

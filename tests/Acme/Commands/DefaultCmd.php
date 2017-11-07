@@ -12,11 +12,11 @@ class DefaultCmd implements TelegramBotCmdInterface {
     /**
      * {@inheritdoc}
      */
-    public function exec(TelegramBotShell $tbs, Update $update, $payload) {
+    public function exec(TelegramBotShell $tbs, Update $update, $payload = null) {
 
         $tbs->getTelegramBotAPI()->sendMessage(array(
             'chat_id' => $update->getMessage()->getChat()->getId(),
-            'text'    => 'I did not understand something again;)'
+            'text'    => 'Default Cmd ;)'
         ));
     }
 }
