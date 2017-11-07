@@ -6,7 +6,6 @@ namespace Silex\Tests\Provider;
 use PDO;
 use Silex\WebTestCase;
 use Silex\Application;
-use Silex\Api\ControllerProviderInterface;
 use MatthiasMullie\Scrapbook\Adapters\MySQL;
 use Silex\Provider\TelegramBotControllerProvider;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -32,13 +31,10 @@ class TelegramBotControllerProviderTest extends WebTestCase {
         $client = new PDO('mysql:dbname=cache;host=127.0.0.1', 'root', '');
         $cache = new MySQL($client);
 
-        /** @var ControllerProviderInterface $tbcp */
-        $tbcp = new TelegramBotControllerProvider(array(
+        $app->mount('/bot479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc', new TelegramBotControllerProvider(array(
             'token'   => '479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc',
             'adapter' => $cache
-        ));
-
-        $app->mount('/bot479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc', $tbcp);
+        )));
 
         return $app;
     }
