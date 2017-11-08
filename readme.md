@@ -77,7 +77,7 @@ class DefaultCmd implements TelegramBotCmdInterface {
 >
 > `https://www.example.com/123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/`
 >
-> Remember that webhook will only work on a https connection and method getUpdate not work when include webhook.
+> Remember that webhook will only work on a https connection and method getUpdates not work when include webhook.
 
 ### License
 
