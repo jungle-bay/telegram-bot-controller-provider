@@ -75,7 +75,7 @@ class DefaultCmd implements TelegramBotCmdInterface {
 > Do not forget to install [webhook](https://core.telegram.org/bots/api#setwebhook).
 > Example url webhook:
 >
-> `https://www.example.com/123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/`
+> `https://www.example.com/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/`
 >
 > Remember that webhook will only work on a https connection and method getUpdates not work when include webhook.
 
