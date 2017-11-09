@@ -37,6 +37,8 @@ class TelegramBotControllerProvider implements ControllerProviderInterface {
 
             $tbs = new TelegramBotShell($this->config, $request->getContent());
 
+            $app['telegram_bot_shell'] = $tbs;
+
             $tbs->run();
 
             return $app->json(array());
