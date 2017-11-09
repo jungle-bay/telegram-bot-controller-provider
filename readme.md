@@ -79,6 +79,8 @@ class DefaultCmd implements TelegramBotCmdInterface {
 >
 > Remember that webhook will only work on a https connection and method getUpdates not work when include webhook.
 
+You may be interested in the following files (development) examples: [getUpdates.php](https://github.com/roma-bb8/telegram-bot-simple/blob/master/bin/getUpdates.php) and [setWebhook.php](https://github.com/roma-bb8/telegram-bot-simple/blob/master/bin/setWebhook.php).
+
 ### License
 
 This bundle is under the [MIT license](http://opensource.org/licenses/MIT). See the complete license in the file: [here](https://github.com/jungle-bay/telegram-bot-controller-provider/blob/master/license.txt).
