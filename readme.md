@@ -20,22 +20,15 @@ composer require jungle-bay/telegram-controller-provider
 
 require_once(__DIR__ . '/vendor/autoload.php');
 
+$app = new \Silex\Application();
 
-use Silex\Application;
-use Acme\Bots\Telegram\Commands\OrderCmd;
-use Acme\Bots\Telegram\Commands\DefaultCmd;
-use Silex\Provider\TelegramBotControllerProvider;
-
-$app = new Application();
-
-// url address can be any, in the example is an example from the documentation.
-$app->mount('/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', new TelegramBotControllerProvider(array(
-    'token'    => '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
-    'adapter'  => $cache, // this adapter for Scrapbook library. See the complete: https://github.com/matthiasmullie/scrapbook#adapters
+$app->mount('/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', new \Silex\Provider\TelegramBotControllerProvider(array(
+    'token'    => '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',          // Your token bot.
+    'adapter'  => $adapter,                                             // This adapter for Scrapbook library. See the complete: https://github.com/matthiasmullie/scrapbook#adapters
     'commands' => array(
-        'default'  => DefaultCmd::class,
-        'mappings' => array(
-            'order' => OrderCmd::class
+        'default'  => \Acme\Bot\Commands\DefaultCmd::class,             // This command will work by default if no command is found. (optional)
+        'mappings' => array(                                            // This is the list of registered commands for the bot. (optional)
+            'order' => \Acme\Bot\Commands\OrderCmd::class
         )
     )
 )));
@@ -43,25 +36,25 @@ $app->mount('/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', new TelegramBotCont
 $app->run();
 ```
 
-##### Example implement default command
+##### Example implement command
 
 ```php
 <?php
 
-namespace Acme\Bots\Telegram\Commands;
+namespace Acme\Bot\Commands;
 
 
 use TelegramBotAPI\Types\Update;
 use TelegramBotShell\TelegramBotShell;
-use TelegramBotShell\Api\TelegramBotCmdInterface;
+use TelegramBotShell\Api\TelegramBotCommandInterface;
 
-class DefaultCmd implements TelegramBotCmdInterface {
+class DefaultCmd implements TelegramBotCommandInterface {
 
     /**
      * {@inheritdoc}
      */
-    public function exec(TelegramBotShell $tbs, Update $update, $payload = null) {
-
+    public function execute(TelegramBotShell $tbs, Update $update, $payload = null) {
+        
         $tbs->getTelegramBotAPI()->sendMessage(array(
             'chat_id' => $update->getMessage()->getChat()->getId(),
             'text'    => 'Default Cmd ;)'
@@ -72,14 +65,13 @@ class DefaultCmd implements TelegramBotCmdInterface {
 
 #### Warning
 
-> Do not forget to install [webhook](https://core.telegram.org/bots/api#setwebhook).
-> Example url webhook:
+> Do not forget to install [webhook](https://core.telegram.org/bots/api#setwebhook). Example url webhook:
 >
-> `https://www.example.com/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/`
+> ```https://www.example.com/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/```
 >
-> Remember that webhook will only work on a https connection and method getUpdates not work when include webhook.
+> Remember that webhook will only work on a ```HTTPS``` connection and method ```getUpdates``` not work when include [webhook](https://core.telegram.org/bots/api#setwebhook).
 
-You may be interested in the following files (development) examples: [getUpdates.php](https://github.com/roma-bb8/telegram-bot-simple/blob/master/bin/getUpdates.php) and [setWebhook.php](https://github.com/roma-bb8/telegram-bot-simple/blob/master/bin/setWebhook.php).
+For the convenience of development, you can use [telegram-bot-cli](https://github.com/jungle-bay/telegram-bot-cli).
 
 ### License
 

@@ -1,23 +1,30 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * Team: jungle
+ * User: Roma Baranenko
+ * Contacts: <jungle.romabb8@gmail.com>
+ * Date: 06.12.17
+ * Time: 12:27
+ */
 
 namespace Silex\Tests\Provider;
 
 
-use PDO;
 use Silex\WebTestCase;
 use Silex\Application;
-use MatthiasMullie\Scrapbook\Adapters\MySQL;
 use Silex\Provider\TelegramBotControllerProvider;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 
 /**
+ * Class TelegramBotControllerProviderTest
  * @package Silex\Tests\Provider
  * @author Roma Baranenko <jungle.romabb8@gmail.com>
  */
 class TelegramBotControllerProviderTest extends WebTestCase {
 
     /**
-     * @return HttpKernelInterface
+     * {@inheritdoc}
      */
     public function createApplication() {
 
@@ -28,12 +35,11 @@ class TelegramBotControllerProviderTest extends WebTestCase {
 
         unset($app['exception_handler']);
 
-        $client = new PDO('mysql:dbname=cache;host=127.0.0.1', 'root', '');
-        $cache = new MySQL($client);
+        $adapter = new MemoryStore();
 
         $app->mount('/bot479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc', new TelegramBotControllerProvider(array(
             'token'   => '479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc',
-            'adapter' => $cache
+            'adapter' => $adapter
         )));
 
         return $app;
@@ -43,7 +49,7 @@ class TelegramBotControllerProviderTest extends WebTestCase {
 
         $client = $this->createClient();
 
-        $client->request('POST', '/bot479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc/', array(), array(), array(), '{"ok": true,"result": [{
+        $client->request('POST', '/bot479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc/', array(), array(), array(), '{
             "update_id": 747719235,
             "message": {
                 "message_id": 1591,
@@ -72,7 +78,7 @@ class TelegramBotControllerProviderTest extends WebTestCase {
                     }
                 ]
             }
-        }]}');
+        }');
 
         $this->assertTrue($client->getResponse()->isOk());
     }

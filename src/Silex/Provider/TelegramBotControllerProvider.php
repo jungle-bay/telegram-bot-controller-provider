@@ -1,4 +1,12 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * Team: jungle
+ * User: Roma Baranenko
+ * Contacts: <jungle.romabb8@gmail.com>
+ * Date: 06.12.17
+ * Time: 12:27
+ */
 
 namespace Silex\Provider;
 
@@ -8,9 +16,9 @@ use Silex\ControllerCollection;
 use TelegramBotShell\TelegramBotShell;
 use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
-use TelegramBotAPI\Exception\TelegramBotAPIException;
 
 /**
+ * Class TelegramBotControllerProvider
  * @package Silex\Provider
  * @author Roma Baranenko <jungle.romabb8@gmail.com>
  */
@@ -23,8 +31,7 @@ class TelegramBotControllerProvider implements ControllerProviderInterface {
 
 
     /**
-     * @param Application $app
-     * @return ControllerCollection
+     * {@inheritdoc}
      */
     public function connect(Application $app) {
 
@@ -49,9 +56,8 @@ class TelegramBotControllerProvider implements ControllerProviderInterface {
 
 
     /**
+     * TelegramBotControllerProvider constructor.
      * @param array $config
-     *
-     * @throws TelegramBotAPIException
      */
     public function __construct(array $config) {
         $this->config = $config;
