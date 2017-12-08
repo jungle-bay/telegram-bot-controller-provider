@@ -7,9 +7,6 @@ env:
   global:
     - COMPOSER_ALLOW_XDEBUG=0
 
-services:
-  - mysql
-
 php:
   - 5.5
   - 5.6
@@ -27,9 +24,6 @@ matrix:
 cache:
   directories:
     - $HOME/.composer/cache
-
-before_install:
-    - mysql -e 'CREATE DATABASE IF NOT EXISTS `cache` CHARACTER SET UTF8 COLLATE utf8_general_ci;'
 
 before_script:
     - composer install --no-interaction --no-suggest
