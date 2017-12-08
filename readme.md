@@ -65,7 +65,7 @@ class DefaultCmd implements TelegramBotCommandInterface {
 
 #### Warning
 
-> Do not forget to install [webhook](https://core.telegram.org/bots/api#setwebhook). Example url webhook:
+> Do not forget to install [webhook](https://core.telegram.org/bots/api#setwebhook)! Example url webhook:
 >
 > ```https://www.example.com/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/```
 >
