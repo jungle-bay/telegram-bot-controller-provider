@@ -45,6 +45,9 @@ class TelegramBotControllerProviderTest extends WebTestCase {
         return $app;
     }
 
+    /**
+     * @expectedException \TelegramBotShell\Exception\TelegramBotShellException
+     */
     public function testTelegramBotControllerProvider() {
 
         $client = $this->createClient();
