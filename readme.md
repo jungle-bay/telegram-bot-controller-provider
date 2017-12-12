@@ -1,16 +1,21 @@
+<p align="center">
+    <a href="https://github.com/jungle-bay/telegram-bot-controller-provider">
+        <img height="128" src="logo.png" alt="Telegram Bot Controller Provider Logo">
+    </a>
+</p>
+
 # Telegram Bot Controller Provider for [Silex](https://silex.symfony.com/)
 
 [![Travis CI](https://img.shields.io/travis/jungle-bay/telegram-bot-controller-provider.svg?style=flat)](https://travis-ci.org/jungle-bay/telegram-bot-controller-provider)
 [![Scrutinizer CI](https://img.shields.io/scrutinizer/g/jungle-bay/telegram-bot-controller-provider.svg?style=flat)](https://scrutinizer-ci.com/g/jungle-bay/telegram-bot-controller-provider)
 [![Codecov](https://img.shields.io/codecov/c/github/jungle-bay/telegram-bot-controller-provider.svg?style=flat)](https://codecov.io/gh/jungle-bay/telegram-bot-controller-provider)
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/46abe828-3d9f-4ef4-9663-aaa94d6239f4.svg?style=flat)](https://insight.sensiolabs.com/projects/46abe828-3d9f-4ef4-9663-aaa94d6239f4)
 
 ### Install
 
-The recommended way to install is through [Composer](https://getcomposer.org):
+The recommended way to install is through [Composer](https://getcomposer.org/doc/00-intro.md#introduction):
 
 ```bash
-composer require jungle-bay/telegram-controller-provider
+composer require jungle-bay/telegram-bot-controller-provider
 ```
 
 ### The simplest example of use
@@ -18,17 +23,19 @@ composer require jungle-bay/telegram-controller-provider
 ```php
 <?php
 
-require_once(__DIR__ . '/vendor/autoload.php');
+require_once __DIR__ . '/vendor/autoload.php';
 
 $app = new \Silex\Application();
 
 $app->mount('/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11', new \Silex\Provider\TelegramBotControllerProvider(array(
-    'token'    => '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',          // Your token bot.
-    'adapter'  => $adapter,                                             // This adapter for Scrapbook library. See the complete: https://github.com/matthiasmullie/scrapbook#adapters
-    'commands' => array(
-        'default'  => \Acme\Bot\Commands\DefaultCmd::class,             // This command will work by default if no command is found. (optional)
-        'mappings' => array(                                            // This is the list of registered commands for the bot. (optional)
-            'order' => \Acme\Bot\Commands\OrderCmd::class
+    'token'    => '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',                 // Your token bot.
+    'storage'  => $adapter,                                                    // This adapter for Scrapbook library to store user sessions. See the complete adapters: https://github.com/matthiasmullie/scrapbook#adapters
+    'mappings' => array(
+        'default'       => \Acme\Bot\Commands\DefaultCmd::class,               // This command will work by default if no command is found or user session. (optional)
+        'inline_query'  => \Acme\Bot\Commands\FeedbackInlineQueryCmd::class,   // This command will work with inline queries. (optional)
+        'commands'      => array(                                              // This is the list of registered commands for the bot. (optional)
+            'help' => \Acme\Bot\Commands\HelpCmd::class,
+            'user' => \Acme\Bot\Commands\UserCmd::class
         )
     )
 )));
@@ -55,10 +62,14 @@ class DefaultCmd implements TelegramBotCommandInterface {
      */
     public function execute(TelegramBotShell $tbs, Update $update, $payload = null) {
         
+        if (null === $update->getMessage()) return false;
+
         $tbs->getTelegramBotAPI()->sendMessage(array(
             'chat_id' => $update->getMessage()->getChat()->getId(),
             'text'    => 'Default Cmd ;)'
         ));
+        
+        return true;
     }
 }
 ```
@@ -71,7 +82,9 @@ class DefaultCmd implements TelegramBotCommandInterface {
 >
 > Remember that webhook will only work on a ```HTTPS``` connection and method ```getUpdates``` not work when include [webhook](https://core.telegram.org/bots/api#setwebhook).
 
-For the convenience of development, you can use [telegram-bot-cli](https://github.com/jungle-bay/telegram-bot-cli).
+### Note
+
+For the convenience of development, you can use [Telegram Bot CLI](https://github.com/jungle-bay/telegram-bot-cli).
 
 ### License
 
