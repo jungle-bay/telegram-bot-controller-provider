@@ -52,19 +52,19 @@ namespace Acme\Bot\Commands;
 
 
 use TelegramBotAPI\Types\Update;
-use TelegramBotShell\TelegramBotShell;
-use TelegramBotShell\Api\TelegramBotCommandInterface;
+use TelegramBotPlatform\TelegramBotPlatform;
+use TelegramBotPlatform\Api\TelegramBotCommandInterface;
 
 class DefaultCmd implements TelegramBotCommandInterface {
 
     /**
      * {@inheritdoc}
      */
-    public function execute(TelegramBotShell $tbs, Update $update, $payload = null) {
+    public function execute(TelegramBotPlatform $tbp, Update $update, $payload = null) {
         
         if (null === $update->getMessage()) return false;
 
-        $tbs->getTelegramBotAPI()->sendMessage(array(
+        $tbp->getTelegramBotAPI()->sendMessage(array(
             'chat_id' => $update->getMessage()->getChat()->getId(),
             'text'    => 'Default Cmd ;)'
         ));
