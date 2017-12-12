@@ -39,14 +39,14 @@ class TelegramBotControllerProviderTest extends WebTestCase {
 
         $app->mount('/bot479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc', new TelegramBotControllerProvider(array(
             'token'   => '479218867:AAGjGTwl0F-prMPIC6-AkNuLD1Bb2tRsYbc',
-            'adapter' => $adapter
+            'storage' => $adapter
         )));
 
         return $app;
     }
 
     /**
-     * @expectedException \TelegramBotShell\Exception\TelegramBotShellException
+     * @expectedException \TelegramBotPlatform\Exception\TelegramBotPlatformException
      */
     public function testTelegramBotControllerProvider() {
 

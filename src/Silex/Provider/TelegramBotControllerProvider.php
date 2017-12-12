@@ -13,8 +13,8 @@ namespace Silex\Provider;
 
 use Silex\Application;
 use Silex\ControllerCollection;
-use TelegramBotShell\TelegramBotShell;
 use Silex\Api\ControllerProviderInterface;
+use TelegramBotPlatform\TelegramBotPlatform;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -42,11 +42,11 @@ class TelegramBotControllerProvider implements ControllerProviderInterface {
 
             $this->config['payload'] = $app;
 
-            $tbs = new TelegramBotShell($this->config, $request->getContent());
+            $tbp = new TelegramBotPlatform($this->config, $request->getContent());
 
-            $app['telegram_bot_shell'] = $tbs;
+            $app['telegram_bot_platform'] = $tbp;
 
-            $tbs->run();
+            $tbp->run();
 
             return $app->json(array());
         });
